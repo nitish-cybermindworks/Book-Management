@@ -7,16 +7,12 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth-guard';
-import { User } from 'src/user/entities/user.entity';
 import { UserRole } from 'src/user/entities/user.entity';
 
-export const user = createParamDecorator(
-  (_data, ctx: ExecutionContext): User => {
-    const request = ctx.switchToHttp().getRequest();
-    const u: User = request.user;
-    return u;
-  },
-);
+export const User = createParamDecorator((_data, ctx: ExecutionContext) => {
+  const request = ctx.switchToHttp().getRequest();
+  return String(request.user.userId);
+});
 
 export function Auth() {
   return applyDecorators(
@@ -35,5 +31,4 @@ export function AdminOnlyAuth() {
   );
 }
 
-export const getUserFromToken = user;
 export const ROLES_KEY = 'roles';

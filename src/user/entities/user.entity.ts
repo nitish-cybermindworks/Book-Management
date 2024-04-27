@@ -43,7 +43,7 @@ export class User extends BaseEntity {
     firstName: string;
     lastName: string | null;
     email: string;
-    phone: string | null;
+    phone: string;
     role: UserRole;
     bio: string | null;
     profileImage: string | null;
