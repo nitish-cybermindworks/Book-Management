@@ -1,5 +1,13 @@
-import { Property, Entity, Unique, Enum } from '@mikro-orm/core';
+import {
+  Property,
+  Entity,
+  Unique,
+  Enum,
+  OneToMany,
+  Collection,
+} from '@mikro-orm/core';
 import { BaseEntity } from '../../base.entity';
+import { Book } from 'src/book/entities/book.entity';
 
 export enum UserRole {
   normalUser = 'normalUser',
@@ -31,6 +39,9 @@ export class User extends BaseEntity {
   @Property({ type: 'text', nullable: true })
   profileImage: string | null;
 
+  @OneToMany({ entity: () => Book, mappedBy: 'author', nullable: true })
+  books = new Collection<Book>(this);
+
   constructor({
     firstName,
     lastName,
@@ -39,6 +50,7 @@ export class User extends BaseEntity {
     role,
     bio,
     profileImage,
+    books,
   }: {
     firstName: string;
     lastName: string | null;
@@ -47,6 +59,7 @@ export class User extends BaseEntity {
     role: UserRole;
     bio: string | null;
     profileImage: string | null;
+    books: Book[];
   }) {
     super();
     this.firstName = firstName;
@@ -56,6 +69,7 @@ export class User extends BaseEntity {
     this.role = role;
     this.bio = bio;
     this.profileImage = profileImage;
+    this.books.add(books);
   }
 
   @Property({ persist: false })
