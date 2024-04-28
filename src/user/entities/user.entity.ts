@@ -50,7 +50,6 @@ export class User extends BaseEntity {
     role,
     bio,
     profileImage,
-    books,
   }: {
     firstName: string;
     lastName: string | null;
@@ -59,7 +58,6 @@ export class User extends BaseEntity {
     role: UserRole;
     bio: string | null;
     profileImage: string | null;
-    books: Book[];
   }) {
     super();
     this.firstName = firstName;
@@ -69,7 +67,6 @@ export class User extends BaseEntity {
     this.role = role;
     this.bio = bio;
     this.profileImage = profileImage;
-    this.books.add(books);
   }
 
   @Property({ persist: false })

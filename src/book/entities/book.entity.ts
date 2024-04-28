@@ -1,6 +1,7 @@
 import { Entity, ManyToOne, Property, Unique } from '@mikro-orm/core';
 import { BaseEntity } from 'src/base.entity';
 import { User } from 'src/user/entities/user.entity';
+import { Category } from './category.entity';
 
 @Unique({ name: 'unique_title_author_index', properties: ['title', 'author'] })
 @Entity()
@@ -18,8 +19,8 @@ export class Book extends BaseEntity {
   @Property({ nullable: true })
   publicationYear: string | null;
 
-  @ManyToOne({ entity: () => Book, nullable: true })
-  category: Book | null;
+  @ManyToOne({ entity: () => Category, nullable: true })
+  category: Category | null;
 
   constructor({
     title,
@@ -31,8 +32,8 @@ export class Book extends BaseEntity {
     title: string;
     author: User;
     isbn: number | null;
-    category: Book | null;
-    publicationYear: string;
+    category: Category | null;
+    publicationYear: string | null;
   }) {
     super();
     this.title = title;
